@@ -1,4 +1,4 @@
-const state = @import("./sharedstate.zig");
+const LexerStateEntry = @import("./lexerstate.zig").LexerStateEntry;
 const std = @import("std");
 const handler = @import("./lexerstatehandler.zig");
 
@@ -6,9 +6,11 @@ const HANDLERS = [_]handler.LexerStateHandler {
     @import("./lexerstatehandlers/generic.zig").exported_handler
 };
 
+const STATE_STACK_SIZE = 32;
+
 pub const Lexer = struct {
-    shared_state: *state.SharedStateStack = undefined,
     allocator: std.mem.Allocator,
+    state_stack: [STATE_STACK_SIZE]LexerStateEntry = undefined,
 
     pub fn init(allocator: std.mem.Allocator) Lexer {
         return Lexer { .allocator = allocator };
