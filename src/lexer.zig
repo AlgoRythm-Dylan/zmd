@@ -7,7 +7,6 @@ const LexerBuffer = CircularBuffer(lexertoken.LexerToken, 16);
 pub const Lexer = struct {
     allocator: std.mem.Allocator,
     token_buffer: LexerBuffer = LexerBuffer.init(),
-    text_buffer: ?std.ArrayList(u8) = null,
 
     pub fn init(allocator: std.mem.Allocator) Lexer {
         return Lexer { .allocator = allocator };
@@ -31,6 +30,12 @@ pub const Lexer = struct {
         else {
             self.initTextBuffer();
             try self.text_buffer.?.append(char);
+        }
+    }
+
+    fn finishTextToken(self: *@This()) !void {
+        if(self.token_buffer.write_in_progress){
+
         }
     }
 
