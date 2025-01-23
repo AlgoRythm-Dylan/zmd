@@ -1,15 +1,17 @@
-const ArrayList = @import("std").ArrayList;
+const std = @import("std");
 
 pub const LexerTokenType = enum {
     text,
     punctuation,
     whitespace,
-    newline
+    newline,
+    end
 };
 
 pub const LexerToken = union(LexerTokenType) {
-    text: ArrayList(u8),
+    text: std.ArrayList(u8),
     punctuation: u8,
     whitespace: void,
-    newline: void
+    newline: void,
+    end: void
 };
